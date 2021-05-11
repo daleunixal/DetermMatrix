@@ -16,15 +16,7 @@ namespace DetermMatrix
                     {
                         Console.WriteLine("Введите размерность матрицы");
                         var dimensionality = Convert.ToInt32(Console.ReadLine());
-                        var m = new double[dimensionality, dimensionality];
-                        for (var i = 0; i < dimensionality; i++)
-                        for (var j = 0; j < dimensionality; j++)
-                        {
-                            var x = i + 1;
-                            var y = j + 1;
-                            if (y % x == 0 || j==0) m[i, j] = 1;                                               
-                            else m[i, j] = 0;
-                        }
+                        var m = Matrix.Fillredheffer(dimensionality);
                         var determinant = Matrix.GetDeterminant(m);
                         Console.WriteLine("Определитель матрицы - " + determinant);
                         Console.Read();
@@ -47,5 +39,7 @@ namespace DetermMatrix
                 
             }
         }
+
+        
     }
 }

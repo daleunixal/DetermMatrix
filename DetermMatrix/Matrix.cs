@@ -10,7 +10,7 @@ namespace DetermMatrix
         public static double GetDeterminant(double[,] matrix)
         {
             if (matrix.GetLength(0) != matrix.GetLength(1))
-                throw new Exception("Matrix isn't square");
+                throw new ArgumentException("Matrix isn't square");
             double determinant = 0;
             var length = matrix.GetLength(0);
             switch (length)
@@ -31,7 +31,7 @@ namespace DetermMatrix
                 }
                 
                 default:
-                    throw new Exception("Memory collision, array have negative length");
+                    throw new OverflowException("Memory collision, array have negative length");
             }
 
             return determinant;
@@ -104,7 +104,7 @@ namespace DetermMatrix
             for (var i = 0; i < n; i++)
             {
                 Equal(n, matrix, A);
-                Change(n, i, matrix, b);
+                SwapColumn(n, i, matrix, b);
                 x[i] = GetDeterminant(matrix) / determinant;
             }
             result = x;
@@ -116,10 +116,25 @@ namespace DetermMatrix
             for (var j = 0; j < n; j++)
                 A[i, j] = B[i, j];
         }
-        static void Change(int n, int N, double[,] A, double[] b)
+        static void SwapColumn(int n, int N, double[,] A, double[] b)
         {
             for (var i = 0; i < n; i++)
                 A[i, N] = b[i];
+        }
+        
+        public static double[,] Fillredheffer(int dimensionality)
+        {
+            var m = new double[dimensionality, dimensionality];
+            for (var i = 0; i < dimensionality; i++)
+            for (var j = 0; j < dimensionality; j++)
+            {
+                var x = i + 1;
+                var y = j + 1;
+                if (y % x == 0 || j == 0) m[i, j] = 1;
+                else m[i, j] = 0;
+            }
+
+            return m;
         }
     }
 }
